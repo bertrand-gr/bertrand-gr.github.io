@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tirage Pattatras</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- Style généré par Claude -->
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Segoe UI", system-ui, sans-serif;
+            color: #eef0ff;
+            background: radial-gradient(circle at 20% 0%, #2b1d5c 0%, #0f1020 55%) fixed;
+        }
+        #app { text-align: center; padding: 20px; }
+        .resultat {
+            min-width: 300px;
+            padding: 40px 50px;
+            border-radius: 24px;
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 800;
+            background: #2a2c4d;
+            transition: background .2s, color .2s;
+        }
+        .resultat.patte { background: #ff6b9d; color: #3a0a1d; }
+        .resultat.tatras { background: #4ecdc4; color: #04302d; }
+        .resultat.pattatras {
+            background: linear-gradient(135deg, #ffd166, #ff6b9d);
+            color: #3a2600;
+            box-shadow: 0 0 30px rgba(255, 209, 102, .4);
+        }
+        .origine { margin: 12px 0 0; color: #9a9dc4; font-size: .95rem; }
+        button {
+            margin-top: 22px;
+            padding: 14px 32px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border: 0;
+            border-radius: 999px;
+            cursor: pointer;
+            color: #0f1020;
+            background: #eef0ff;
+            transition: transform .12s;
+        }
+        button:hover:not(:disabled) { transform: translateY(-2px); }
+        button:disabled { opacity: .5; cursor: wait; }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="resultat" :class="classe">{{ resultat }}</div>
+    <p class="origine" v-if="nombre !== null">Nombre tiré : {{ nombre }}</p>
+    <button @click="relancer">Relancer</button>
+</div>
+
+<script>
+    Vue.createApp({
+        data() {
+            return { nombre: null, resultat: '…'};
+        },
+        computed: {
+            classe() {
+                return typeof this.resultat === 'string' ? this.resultat.toLowerCase() : '';
+            },
+        },
+        methods: {
+            async relancer() {
+                this.chargement = true;
+                try {
+                    const rep = await fetch('?action=tirage');
+                    const data = await rep.json();
+                    this.nombre = data.nombre;
+                    this.resultat = data.resultat;
+                } catch (e) {
+                    this.resultat = 'Erreur';
+                } finally {
+                    this.chargement = false;
+                }
+            },
+        },
+        mounted() { this.relancer(); },
+    }).mount('#app');
+</script>
+</body>
+</html>
