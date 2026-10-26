@@ -2,6 +2,10 @@
 
 Petit programme qui tire des nombres aléatoires entre 1 et 6457 et leur applique des règles d'affichage spécifiques. Le projet est une page statique publiée avec GitHub Pages.
 
+## Fonctionnement
+
+Cliquez sur le bouton "relancer" pour tirer un autre chiffre.
+
 ## Objectif
 
 Parcourir une suite de nombres aléatoires de 1 à 6457 et, pour chaque nombre, afficher :
