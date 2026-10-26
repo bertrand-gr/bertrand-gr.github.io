@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -61,9 +62,30 @@
 </div>
 
 <script>
+    function nombreAleatoire() {
+        return Math.floor(Math.random() * 6457) + 1;
+    }
+
+    function appliquerRegles(nombre){
+        let resulat;
+        if (nombre % 3 === 0 && nombre % 5 === 0){
+            resultat = "Pattatras";
+        }else if(nombre % 3 === 0){
+            resultat = "Patte";
+        }
+        else if(nombre % 5 === 0){
+            resultat = "Tatras";
+        }
+        else{
+            resultat = nombre;
+        }
+        return {'nombre' : nombre, 'resultat' : resultat};
+    }
+
     Vue.createApp({
         data() {
-            return { nombre: null, resultat: '…'};
+            const nombre = nombreAleatoire();
+            return { nombre: nombre, resultat: appliquerRegles(nombre)};
         },
         computed: {
             classe() {
@@ -74,11 +96,11 @@
             async relancer() {
                 this.chargement = true;
                 try {
-                    const rep = await fetch('?action=tirage');
-                    const data = await rep.json();
+                    const data = appliquerRegles(nombreAleatoire());
                     this.nombre = data.nombre;
                     this.resultat = data.resultat;
                 } catch (e) {
+                    console.log(this.resultat, data.resultat);
                     this.resultat = 'Erreur';
                 } finally {
                     this.chargement = false;
