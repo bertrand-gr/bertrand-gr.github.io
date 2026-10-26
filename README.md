@@ -67,7 +67,7 @@ Parcourir une suite de nombres aléatoires de 1 à 6457 et, pour chaque nombre, 
 
 ## Lancer le projet en local
 
-Aucune installation n'est nécessaire : ouvrir `index.html` dans un navigateur suffit.
+Aucune installation n'est nécessaire : ouvrir `[index.html](https://bertrand-gr.github.io/)` dans un navigateur suffit.
 
 ## Publication
 
