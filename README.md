@@ -31,27 +31,28 @@ Parcourir une suite de nombres aléatoires de 1 à 6457 et, pour chaque nombre, 
 1. Un nombre entier aléatoire est tiré entre 1 et 6457 inclus :
 
    ```javascript
-   const nombre = Math.floor(Math.random() * 6457) + 1;
+   Math.floor(Math.random() * 6457) + 1;
    ```
 
 2. La fonction `appliquerRegles(nombre)` détermine l'affichage. L'ordre des tests est important : le cas « multiple de 3 et de 5 » doit être vérifié en premier, sinon il serait masqué par les deux autres.
 
    ```javascript
-   function appliquerRegles(nombre) {
-     let resultat;
+    function appliquerRegles(nombre){
+        let resulat;
+        if (nombre % 3 === 0 && nombre % 5 === 0){
+            resultat = "Pattatras";
+        }else if(nombre % 3 === 0){
+            resultat = "Patte";
+        }
+        else if(nombre % 5 === 0){
+            resultat = "Tatras";
+        }
+        else{
+            resultat = nombre;
+        }
+        return {'nombre' : nombre, 'resultat' : resultat};
+    }
 
-     if (nombre % 3 === 0 && nombre % 5 === 0) {
-       resultat = "Pattatras";
-     } else if (nombre % 3 === 0) {
-       resultat = "Patte";
-     } else if (nombre % 5 === 0) {
-       resultat = "Tatras";
-     } else {
-       resultat = nombre;
-     }
-
-     return { nombre, resultat };
-   }
    ```
 
 3. L'interface (Vue.js) affiche le résultat, le nombre tiré, et propose un bouton **Relancer** pour effectuer un nouveau tirage. Le style du résultat change selon la règle appliquée (`patte`, `tatras`, `pattatras`).
